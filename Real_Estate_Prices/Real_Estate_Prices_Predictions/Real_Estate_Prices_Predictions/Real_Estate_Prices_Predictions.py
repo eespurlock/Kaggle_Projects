@@ -6,7 +6,9 @@ Project Name: Predicting Real Estate Proces
 Project Description: This project comes from Kaggle: https://www.kaggle.com/c/house-prices-advanced-regression-techniques/overview
     The data describes residential homes in Ames, Iowa
     The goal is to predict the price of the homes in the area
-    The code here is based on this solution: https://www.kaggle.com/akashsdas/predict-house-prices-in-depth-eda
+    The code here is inspired by these solutions: 
+        https://www.kaggle.com/akashsdas/predict-house-prices-in-depth-eda
+        https://www.kaggle.com/skirmer/fun-with-real-estate-data
 '''
 
 #Import statements

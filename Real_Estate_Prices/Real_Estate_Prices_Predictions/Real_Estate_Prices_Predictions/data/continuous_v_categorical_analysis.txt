@@ -1,0 +1,725 @@
+This file looks at the different columns of our real estate data and determines:
+1: If we will consider this to be a continuous or categorical variable and why
+2: What we will do with any n/a values in a given columns (if there are n/a values)
+3: How we will transform the data and use it in our analysis
+
+ID: uniquely identifies each home
+	1: We will look at this as a continuous column
+	2: There are no n/a values
+	3: We are not going to use this in our analyses as every value is unique to 
+		a particular home
+
+MSSubClass: Identifies the type of dwelling
+	The types of dwelling include
+		Size:
+			1-story
+			1-1/2-story
+			2-story
+			2-1/2-story
+			Split or Multi-Level
+			Split Foyer
+			Duplex
+			Has Attic (only mentioned once in reference to 1-story homes)
+			If itis a Planned Unit Development (PUD)
+			If it is a 2 family conversion
+		Age:
+			1946 and Newer
+			1945 and Older
+			All ages
+	1: Even though the column is numeric, we are going to look at this as a categorical variable for 2 reasons
+		A: There are a finite number of categories
+		B: It does not appear that increasing / decreasing numbers are correlated to the size or
+			age of the house. The values 20 - 75 do appear to have larger homes as larger numbers
+			but values 80 - 190 do not follow that same pattern
+	2: There are no n/a values
+	3: We are going to use this data to create new columns (that we may or may not use) indicating:
+			1-story
+			1-1/2-story
+			2-story
+			2-1/2-story
+			Split or Multi-Level
+			Split Foyer
+			Duplex
+			If itis a Planned Unit Development (PUD)
+			If it is a 2 family conversion
+		As you can see, I am leaving out whether it has an attic, and the age of the home as those metrics
+		are not uniformly indicated across all categories.
+
+MSZoning: Identifies the general zoning classification of the sale
+	The zones included in this variable are:
+		RL: Residential Low Density
+		RM: Residential Medium Density
+		RH: Residential High Density
+		C: Commercial
+		FV: Floating Village Residential
+	1: We are going to treat this as a categorical variable because we have a finite number of strings
+	2: There are no n/a values
+	3: We are going to create new columns, but because most of the homes are residential and most
+		of the residential homes are low density, we are going to create new categories
+		A: Residential low density
+		B: Residential medium to high density
+		C: Other zoning type
+
+LotFrontage: Linear feet of street connected to property
+	1: We are going to treat this as a continuous variable for two reasons
+		A: There are 110 different entries
+		B: The number in this column gives us useful information about how connected the home is to the
+			street outside
+	2: There are 259 n/a values. Because the min of the data in this column is 21.0, we will assume
+		that an n/a value means there are 0 feet of street connected to the property
+	3: (after dealing with n/a values) We will use the data as-is
+
+LotArea: Lot size in square feet
+	1: We are going to treat this as a continuous variable for two reasons
+		A: There are 1,073 different entries
+		B: The number in this column gives us useful information about the size of the home
+	2: There are no n/a values
+	3: We will use the data as-is
+
+Street: Type of road access to property
+	This includes gravel or paved
+	1: As there are only two values, this is definitely categorical
+	2: There are no n/a values
+	3: Because there are only 6 instances of gravel, I am going to change this column to indicate
+		if the road is paved (1) or not (0)
+	
+Alley: Type of alley access to property
+	This includes if the alley is gravel, paved, or if there is no alley access
+	1: As there are only 3 opetions, this is definitely categorical
+	2: There are 1,369 n/a values, but n/a here means there is no alley access, which is easy to indicate
+	3: Because most of the homes do not have alley access, I am going to change this variable to indicate
+		if there is alley access (1) or not (0)
+
+LotShape: General shape of property
+	Is on a scale that goes from regular through slightly and moderately irregular to irregular
+	1: As there are only 4 options, this looks like a categorical variable, but I am going to treat
+		this like a continuous variable because the different values are correlated with how
+		irregular the lot shape is
+	2: There are no n/a values
+	3: I am going to change the column to use numbers instead of strings
+		Regular lot shape -> 0
+		Slightly irregular -> 1
+		Moderately irregular -> 2
+		Irregular -> 3
+
+LandContour: Flatness of the property
+	Lvl: Near Flat/Level	
+    Bnk: Banked - Quick and significant rise from street grade to building
+    HLS: Hillside - Significant slope from side to side
+    Low: Depression
+	1: There are only 4 categories that do not and really can not follow a clear, linear progression
+	2: There are no n/a values
+	3: Because the vast majority of these values are level, I am going to change this column to
+		indicate if the property is level (1) or not (0)
+
+Utilities: Type of utilities available
+	This column only contains 2 values:
+		AllPub: All public Utilities (E,G,W,& S)
+		NoSeWa: Electricity and Gas Only
+	1: Definitely categorical
+	2: There are no n/a values
+	3: All of the entries except one have the value AllPub, so I am not going to use this column
+
+LotConfig: Lot configuration
+	Inside: Inside lot
+    Corner: Corner lot
+    CulDSac: Cul-de-sac
+    FR2: Frontage on 2 sides of property
+    FR3: Frontage on 3 sides of property
+	1: As there are a finite set of values, this is categorical
+	2: There are no n/a values
+	3: I am going to create new columns to determine
+		Inside
+		Corner
+		CulDSac
+		Frontage (I am not going to distinguish between 2 and 3 sides as there are only 4 entries with
+			frontage on 3 sides)
+
+LandSlope: Slope of property
+	Gtl: Gentle slope
+	Mod: Moderate Slope	
+	Sev: Severe Slope
+	1: As there are only 3 values, it looks like a categorical variable, but I am going to treat it like
+		a continuous variable as the 3 values increase in intensity of slope
+	2: There are no n/a values
+	3: I am going to change the column values to numbers instead of strings
+		Gentle slope -> 0
+		Moderate -> 1
+		Severe -> 2
+
+Neighborhood: Physical locations within Ames city limits
+	1: As each of the values maps to a specific neighborhood, this is definitely a categorical variable
+	2: There are no n/a values
+	3: I have 2 options here
+		A: Use the data as-is
+		B: Create new columns for each of the neighborhoods to indicate if the property is in them or not
+			I would prefer not to go down this route because there are so many values here and going down
+			that path would take a lot of time and memory.
+			However, there is a very likely chance that a home being in a specific neighborhood will have
+			a profound impact on the price. In all likelihood, there are at least a couple of neighborhoods
+			that would be very predictive of price.
+
+Codition 1 and Condition 2: Proximity to various conditions
+	Artery: Adjacent to arterial street
+	Feedr: Adjacent to feeder street	
+	Norm: Normal	
+	RRNn: Within 200' of North-South Railroad
+	RRAn: Adjacent to North-South Railroad
+	PosN: Near positive off-site feature--park, greenbelt, etc.
+	PosA: Adjacent to postive off-site feature
+	RRNe: Within 200' of East-West Railroad
+	RRAe: Adjacent to East-West Railroad
+	1: As each of the values indicate a proximity to a given condition, this is categorical
+	2: There are no n/a values
+	3: Because these values are split across 2 different columns, I am going to turn each of the values
+		into their own column and indicate if the property is near the given condition or not
+
+BldgType: Type of dwelling
+	1Fam: Single-family Detached	
+	2FmCon: Two-family Conversion; originally built as one-family dwelling
+	Duplx: Duplex
+	TwnhsE: Townhouse End Unit
+	TwnhsI: Townhouse Inside Unit
+	1: As this column refers to different house types, it is categorical
+	2: There are no n/a values
+	3: There is some overlap between this column and the MSSubClass column (both of them have the value
+		of Duplex) and the LotArea column (both have to do with the size of the home), so I am going
+		to not use this column in my analysis
+
+HouseStyle: Style of dwelling
+	1Story: One story
+	1.5Fin: One and one-half story: 2nd level finished
+	1.5Unf: One and one-half story: 2nd level unfinished
+	2Story: Two story
+	2.5Fin: Two and one-half story: 2nd level finished
+	2.5Unf: Two and one-half story: 2nd level unfinished
+	SFoyer: Split Foyer
+	SLvl: Split Level
+	1: As this column refers to different house styles, it is categorical
+	2: There are no n/a values
+	3: There is some overlap between this column and the MSSubClass column (both of them have the number 
+	of stories), so I am not going to use all of the data in this column. I will, however, use this
+	column to create a new column indicating if the 2nd level is finished (1) or not (0)
+
+OverallQual: Rates the overall material and finish of the house from 1 (lowest) to 10 (highest)
+	1: Since higher numbers here are associated with higher quality, this is continuous
+	2: There are no n/a values
+	3: I am going to combine this data with OverallCond
+
+OverallCond: Rates the overall condition of the house from 1 (lowest) to 10 (highest)
+	1: Since higher numbers here are associated with better home condition, this is continuous
+	2: There are no n/a values
+	3: I am going to combine this data with OverallQual
+
+Because Quality and Condition seem relatively similar, I am going to create 2 new columns that
+combine the two scores.
+	1: QualCondDiff that takes the difference of the 2 scores
+	2: QualCondAvg that takes the average of the two scores
+
+YearBuilt: Original construction date
+	1: Since higher values mean newer homes, this is a continuous variable
+	2: There are no n/a values
+	3: I am going to use the data as-is
+
+YearRemodAdd: Remodel date (same as construction date if no remodeling or additions)
+	1: Since higher values mean newer remodels, this is a continuous variable
+	2: There are no n/a values
+	3: Because some homes have never been remodeled, I am going to change this into 2 columns
+		A: Whether the home has been remodeled or not
+		B: The number of years after the home was built that a remodel occurred
+
+RoofStyle: Type of roof
+	Flat: Flat
+	Gable: Gable
+	Gambrel: Gabrel (Barn)
+	Hip: Hip
+	Mansard: Mansard
+	Shed: Shed
+	1: Because each value refers to a different roof type, this is categorical
+	2: There are no n/a values
+	3: Most of the roof types are either Gable or Hip, so I am going to create 3 columns:
+		A: The roof is Gable (1) or not (0)
+		B: The roof is Hip (1) or not (0)
+		C: The roof is of some other style (1) or not (0)
+
+RoofMatl: Roof material
+	ClyTile: Clay or Tile
+	CompShg: Standard (Composite) Shingle
+	Membran: Membrane
+	Metal: Metal
+	Roll: Roll
+	Tar&Grv: Gravel & Tar
+	WdShake: Wood Shakes
+	WdShngl: Wood Shingles
+	1: Because each value refers to a different roof material, this is categorical
+	2: There are no n/a values
+	3: Because most of the roof types are CompShg, we are going to create a column that indicates if the
+		roof is CompShg (1) or not (0)
+
+Exterior1st and Exterior2nd: Exterior covering on house
+	AsbShng	Asbestos Shingles
+	AsphShn: Asphalt Shingles
+	BrkComm: Brick Common
+	BrkFace: Brick Face
+	CBlock: Cinder Block
+	CemntBd: Cement Board
+	HdBoard: Hard Board
+	ImStucc: Imitation Stucco
+	MetalSd: Metal Siding
+	Other: Other
+	Plywood: Plywood
+	PreCast: PreCast	
+	Stone: Stone
+	Stucco: Stucco
+	VinylSd: Vinyl Siding
+	Wd Sdng: Wood Siding
+	WdShing: Wood Shingles
+	1: Because each value refers to a different exterior, this is categorical
+	2: There are no n/a values
+	3: Because these values are split across 2 different columns, I am going to turn each of the values
+		into their own column and indicate if the property has that siding or not
+
+MasVnrType: Masonry veneer type
+	BrkCmn: Brick Common
+	BrkFace: Brick Face
+	CBlock: Cinder Block
+	None: None
+	Stone: Stone
+	1: Because each value refers to a different vaneer type, this is categorical
+	2: There are 8 n/a values, but I am not going to enter any values for them
+	3: I am going to create new columns for each vaneer type and indicate if the property has that
+		vaneer type or not
+
+MasVnrArea: Masonry veneer area in square feet
+	1: Because this column refers to an area, it is continuous
+	2: There are 8 n/a values. I am going use the average of this column for these 8 values
+	3: After dealing with n/a values, I am going to use this data as-is
+
+ExterQual: Evaluates the quality of the material on the exterior 
+	Ex: Excellent
+	Gd: Good
+	TA: Average/Typical
+	Fa: Fair
+	Po: Poor
+	1: Because we can rank these from best to worst, this is a continuous variable
+	2: There are no n/a values
+	3: I am going to change this column to instead be strings to ints ranging from 1 (the best)
+		to 5 (the worst) and then combine this variable with ExterCond
+
+ExterCond: : Evaluates the present condition of the material on the exterior 
+	Ex: Excellent
+	Gd: Good
+	TA: Average/Typical
+	Fa: Fair
+	Po: Poor
+	1: Because we can rank these from best to worst, this is a continuous variable
+	2: There are no n/a values
+	3: I am going to change this column to instead be strings to ints ranging from 1 (the best)
+		to 5 (the worst) and then combine this variable with ExterQual
+
+Because Quality and Condition seem relatively similar, I am going to create 2 new columns that
+combine the two scores.
+	1: ExterQualCondDiff that takes the difference of the 2 scores
+	2: ExterQualCondAvg that takes the average of the two scores
+
+Foundation: Type of foundation
+	BrkTil: Brick & Tile
+	CBlock: Cinder Block
+	PConc: Poured Contrete	
+	Slab: Slab
+	Stone: Stone
+	Wood: Wood
+	1: Because the values refer to different foundation types, this is categorical
+	2: There are no n/a values
+	3: Most of the foundation types are PConc, CBlock, or BrkTil, so I am going to make a new column
+		for each of those types of foundations to indicate if a property has that foundation or not. I
+		will also create an Other column to indicate if a property has another type of foundation
+
+BsmtQual: Evaluates the height of the basement
+	Ex: Excellent (100+ inches)	
+	Gd: Good (90-99 inches)
+	TA: Typical (80-89 inches)
+	Fa: Fair (70-79 inches)
+	NA: No Basement
+	1: Beause this column buckets height into different categories, but those categories are correlated
+		with a taller basement, this column could go either way
+	2: There are n/a values, but n/a values mean that there is no basement
+	3: I am going to keep this as one column, but I am going to change the values
+		Ex -> 100
+		Gd -> 90
+		TA -> 80
+		FA -> 70
+		NA -> 0
+
+BsmtCond: Evaluates the general condition of the basement
+	Gd: Good
+	TA: Typical - slight dampness allowed
+	Fa: Fair - dampness or some cracking or settling
+	Po: Poor - Severe cracking, settling, or wetness
+	NA: No Basement
+	1: Because we can rank these from best to worst, this is a continuous variable
+	2: There are n/a values, but n/a values mean that there is no basement
+	3: The vast majority of properties have a value of TA, so I don't think it would be useful
+		to include this column
+
+BsmtExposure: Refers to walkout or garden level walls
+	Gd: Good Exposure
+	Av: Average Exposure (split levels or foyers typically score average or above)	
+	Mn: Mimimum Exposure
+	No: No Exposure
+	NA: No Basement
+	1: Because we can rank these from most to least, this is a continuous variable
+	2: There are n/a values, but n/a values mean that there is no basement
+	3: I am going to change this column to rank exposure from 0 (no basement) to 4 (Good Exposure)
+	
+BsmtFinType1 and BsmtFinType2: Rating of basement finished area
+	GLQ: Good Living Quarters
+	ALQ: Average Living Quarters
+	BLQ: Below Average Living Quarters	
+	Rec: Average Rec Room
+	LwQ: Low Quality
+	Unf: Unfinshed
+	NA: No Basement
+	1: Because we can rank the finish type from unfinished to good, this is continuous
+	2: There are n/a values, but n/a values mean that there is no basement
+	3: I am going to combine this with the next 2 columns
+	
+BsmtFinSF1 and BsmtFinSF2: Type 1 or 2 finished square feet
+	1: Because this is an area, it is continuous
+	2: There are no n/a values
+	3: I am going to combine this with the column above and below
+
+BsmtUnfSF: Unfinished square feet of basement area
+	1: Because this is an area, it is continuous
+	2: There are no n/a values
+	3: I am going to combine this with the above 2 columns
+
+I am going to create new columns for the basement finish. I am going to create a new column for
+	each basement finish type and each column will be how many square feet each property has. 
+
+TotalBsmtSF: Total square feet of basement area
+	1: Because this is an area, it is continuous
+	2: There are no n/a values
+	3: I am going to use this column as-is
+
+Heating: Type of heating
+	Floor: Floor Furnace
+	GasA: Gas forced warm air furnace
+	GasW: Gas hot water or steam heat
+	Grav: Gravity furnace	
+	OthW: Hot water or steam heat other than gas
+	Wall: Wall furnace
+	1: Because this column refers to different heating types, this is categorical
+	2: There are no n/a values
+	3: Because the vast majority of properties have GasA heating, I am not going to use this column
+		
+HeatingQC: Heating quality and condition
+	Ex: Excellent
+	Gd: Good
+	TA: Average/Typical
+	Fa: Fair
+	Po: Poor
+	1: Because we can rank this from best to worst, this is continuous
+	2: There are no n/a values
+	3: I am going to change this column to rank heating quality from best (1) to worst (5)
+		
+CentralAir: Central air conditioning
+	N: No
+	Y: Yes
+	1: Since this is a yes/no question, it is categorical
+	2: There are no n/a values
+	3: I am going to change this from being yes/no to being 1 (has central air) or 0 (doesn't have
+		central air)
+		
+Electrical: Electrical system
+	SBrkr: Standard Circuit Breakers & Romex
+	FuseA: Fuse Box over 60 AMP and all Romex wiring (Average)	
+	FuseF: 60 AMP Fuse Box and mostly Romex wiring (Fair)
+	FuseP: 60 AMP Fuse Box and mostly knob & tube wiring (poor)
+	Mix: Mixed
+	1: Since this refers to different electrical types, ths is categorical
+	2: There is one n/a value, and I am not going to try to impute it
+	3: Because the vast majority of properties have SBrkr, I am going to change this column to
+		indicate if the property has SBrkr (1) or not (0)
+		
+1stFlrSF and 2ndFlrSF: First and Second Floor square feet
+	1: Because these columns refer to area, it is continuous
+	2: There are no n/a values
+	3: I will use these columns as-is
+
+LowQualFinSF: Low quality finished square feet (all floors)
+	1: Because these columns refer to area, it is continuous
+	2: There are no n/a values
+	3: I will use this column as-is
+
+GrLivArea: Above grade (ground) living area square feet
+	1: Because these columns refer to area, it is continuous
+	2: There are no n/a values
+	3: I will use this column as-is
+
+BsmtFullBath: Basement full bathrooms
+	1: Because this refers to the number of things, this is continuous
+	2: There are no n/a values
+	3: I will use this column as-is
+
+BsmtHalfBath: Basement half bathrooms
+	1: Because this refers to the number of things, this is continuous
+	2: There are no n/a values
+	3: I will use this column as-is
+
+FullBath: Full bathrooms above grade
+	1: Because this refers to the number of things, this is continuous
+	2: There are no n/a values
+	3: I will use this column as-is
+
+HalfBath: Half baths above grade
+	1: Because this refers to the number of things, this is continuous
+	2: There are no n/a values
+	3: I will use this column as-is
+
+BedroomAbvGr: Bedrooms above grade (does NOT include basement bedrooms)
+	1: Because this refers to the number of things, this is continuous
+	2: There are no n/a values
+	3: I will use this column as-is
+
+KitchenAbvGr: Kitchens above grade
+	1: Because this refers to the number of things, this is continuous
+	2: There are no n/a values
+	3: I will use this column as-is
+
+KitchenQual: Kitchen quality
+	Ex: Excellent
+	Gd: Good
+	TA: Typical/Average
+	Fa: Fair
+	1: Because we can rank this from best to worst, this is continuous
+	2: There are no n/a values
+	3: I will rank values in this column from best (1) to worst (4)
+       	
+TotRmsAbvGrd: Total rooms above grade (does not include bathrooms)
+	1: Because this refers to the number of things, this is continuous
+	2: There are no n/a values
+	3: I will use this column as-is
+
+Functional: Home functionality (Assume typical unless deductions are warranted)
+	Typ: Typical Functionality
+	Min1: Minor Deductions 1
+	Min2: Minor Deductions 2
+	Mod: Moderate Deductions
+	Maj1: Major Deductions 1
+	Maj2: Major Deductions 2
+	Sev: Severely Damaged
+	Sal: Salvage only
+	1: Because we can rank these on the severity of deductions, this is continuous
+	2: There are no n/a values
+	3: Because the vast majority of homes are typical, I am going to change this column to indicate if
+		the functionality is typical (1) or not (0)
+		
+Fireplaces: Number of fireplaces
+	1: Because this refers to the number of things, this is continuous
+	2: There are no n/a values
+	3: I will use this column as-is
+
+FireplaceQu: Fireplace quality
+	Ex: Excellent - Exceptional Masonry Fireplace
+	Gd: Good - Masonry Fireplace in main level
+	TA: Average - Prefabricated Fireplace in main living area or Masonry Fireplace in basement
+	Fa: Fair - Prefabricated Fireplace in basement
+	Po: Poor - Ben Franklin Stove
+	NA: No Fireplace
+	1: Because we can rank this from best to worst, this is continuous
+	2: There are n/a values to indicate there is no fireplace
+	3: I am going to change the column to indicate quality from 0 (no fireplace) to 5 (best fireplace)
+		
+GarageType: Garage location
+	2Types	More than one type of garage
+	Attchd	Attached to home
+	Basment	Basement Garage
+	BuiltIn	Built-In (Garage part of house - typically has room above garage)
+	CarPort	Car Port
+	Detchd	Detached from home
+	NA	No Garage
+	1: Because this refers to different garage types, this is categorical
+	2: There are n/a values to indicate there is no garage
+	3: Because most garages are either attached or detached, I am going to turn this into 3 columns to
+		indicate if the garage is attached, detached, or other
+		
+GarageYrBlt: Year garage was built
+	1: Because this refers to a year, this is continuous
+	2: There are n/a values to indicate there is no garage and I will change these values to be 0
+	3: After dealing with n/a values, I will use this column as-is
+		
+GarageFinish: Interior finish of the garage
+	Fin: Finished
+	RFn: Rough Finished	
+	Unf: Unfinished
+	NA: No Garage
+	1: Because we can rank the finish, this is continuous
+	2: There are n/a values to indicate there is no garage
+	3: I am going to change this to be a scale from 0 (no garage) to 3 (finished garage)
+		
+GarageCars: Size of garage in car capacity
+	1: Because this refers to the number of things, this is continuous
+	2: There are no n/a values
+	3: I will use this column as-is
+
+GarageArea: Size of garage in square feet
+	1: Because this is an area, this is continuous
+	2: There are no n/a values
+	3: Because area and number of cars the garage can hold are related, I am not going to use this
+		column
+
+GarageQual: Garage quality
+	Ex: Excellent
+	Gd: Good
+	TA: Typical/Average
+	Fa: Fair
+	Po: Poor
+	NA: No Garage
+	1: Because we can rank these from best to worst, this is a continuous variable
+	2: n/a values indicate no garage
+	3: I am going to change this column to instead be strings to ints ranging from 0 (no garage)
+		to 5 (the best) and then combine this variable with GarageCond
+		
+GarageCond: Garage condition
+	Ex: Excellent
+	Gd: Good
+	TA: Typical/Average
+	Fa: Fair
+	Po: Poor
+	NA: No Garage
+	1: Because we can rank these from best to worst, this is a continuous variable
+	2: n/a values indicate no garage
+	3: I am going to change this column to instead be strings to ints ranging from 0 (no garage)
+		to 5 (the best) and then combine this variable with GarageQual
+
+Because Quality and Condition seem relatively similar, I am going to create 2 new columns that
+combine the two scores.
+	1: GarageQualCondDiff that takes the difference of the 2 scores
+	2: GarageQualCondAvg that takes the average of the two scores
+		
+PavedDrive: Paved driveway
+	Y: Paved 
+	P: Partial Pavement
+	N: Dirt/Gravel
+	1: Because values indicate different kinds of driveways, this is categorical
+	2: There are no n/a values
+	3: Because most driveways are fully paved, I am going to change this column to indicate if the 
+		driveway is fully paved (1) or not (0)
+
+WoodDeckSF: Wood deck area in square feet
+	1: Because this refers to area, it is continuous
+	2: There are no n/a values
+	3: I will use this column as-is
+
+OpenPorchSF: Open porch area in square feet
+	1: Because this refers to area, it is continuous
+	2: There are no n/a values
+	3: I will use this column as-is
+
+EnclosedPorch: Enclosed porch area in square feet
+	1: Because this refers to area, it is continuous
+	2: There are no n/a values
+	3: I will use this column as-is
+
+3SsnPorch: Three season porch area in square feet
+	1: Because this refers to area, it is continuous
+	2: There are no n/a values
+	3: I will use this column as-is
+
+ScreenPorch: Screen porch area in square feet
+	1: Because this refers to area, it is continuous
+	2: There are no n/a values
+	3: I will use this column as-is
+
+PoolArea: Pool area in square feet
+	1: Because this refers to area, it is continuous
+	2: There are no n/a values
+	3: I will use this column as-is
+
+PoolQC: Pool quality
+	Ex: Excellent
+	Gd: Good
+	TA: Average/Typical
+	Fa: Fair
+	NA: No Pool
+	1: Because we can rank this from best to worst, this is a continuous variable
+	2: n/a values indicate no pool
+	3: Because most properties do not have a pool and we already have pool square footage to
+		indicate if there is a pool or not, I am going to exclude this column
+		
+Fence: Fence quality
+	GdPrv: Good Privacy
+	MnPrv: Minimum Privacy
+	GdWo: Good Wood
+	MnWw: Minimum Wood/Wire
+	NA: No Fence
+	1: Because there is a mix of both privacy amount and quality of the fence, this is categorical
+	2: n/a values indicate no fence
+	3: Because most homes do not have a fence, I am going to change this column to indicate if the
+		property has a fence (1) or not (0)
+	
+MiscFeature: Miscellaneous feature not covered in other categories
+	Gar2: 2nd Garage (if not described in garage section)
+	Othr: Other
+	Shed: Shed (over 100 SF)
+	TenC: Tennis Court
+	NA: None
+	1: Because each value refers to something completely different, this is categorical
+	2: n/a values indicate there is no other feature to describe
+	3: Because the vast majority of homes don't have any feature, I am going to exclude this column
+		
+MiscVal: $Value of miscellaneous feature
+	1: Because this column describes value, this is continuous
+	2: There are no n/a values
+	3: Because I have excluded the above column, I will exclude this column
+
+MoSold: Month Sold (MM)
+	1: While each month can be described numerically, because different months are more or less
+		desireable to move in (looking at the data, it seems that fewer homes are sold in the winter),
+		I am going to treat this as a categorical variable
+	2: There are no n/a values
+	3: I am going to create new columns for each month to indicate if the home was sold in that month (1)
+		or not(0)
+
+YrSold: Year Sold (YYYY)
+	1: While I have treated time as continuous before, because this has to do with the year of sale,
+		and each year might have had different housing markets, I am going to treat this as a 
+		categorical variable
+	2: There are no n/a values
+	3: I am going to create new columns for each year to indicate if the home was sold in that year (1)
+		or not(0)
+
+SaleType: Type of sale
+	WD: Warranty Deed - Conventional
+	CWD: Warranty Deed - Cash
+	VWD: Warranty Deed - VA Loan
+	New: Home just constructed and sold
+	COD: Court Officer Deed/Estate
+	Con: Contract 15% Down payment regular terms
+	ConLw: Contract Low Down payment and low interest
+	ConLI: Contract Low Interest
+	ConLD: Contract Low Down
+	Oth: Other
+	1: Because each value refers to a different sale type, this is categorical
+	2: There are no n/a values
+	3: Because most sales were either Warranty Deed or New, I am going to create three new columns to
+		indicate if the sale was Warranty Deed or not, New or not, or some Other type of sale
+		
+SaleCondition: Condition of sale
+	Normal: Normal Sale
+	Abnorml: Abnormal Sale -  trade, foreclosure, short sale
+	AdjLand: Adjoining Land Purchase
+	Alloca: Allocation - two linked properties with separate deeds, typically condo with a garage unit	
+	Family: Sale between family members
+	Partial: Home was not completed when last assessed (associated with New Homes)
+	1: Because each value refers to a different condition type, this is categorical
+	2: There are no n/a values
+	3: Because most sales were either Normal, Partial, or Abnorml, I am going to create four new columns 
+		to indicate if the sale was Normal or not, Partial or not, Abnorml or not, or some Other type of
+		sale
+
+SalePrice: The price the property sold for
+	This is what we are trying to predict
+
+	

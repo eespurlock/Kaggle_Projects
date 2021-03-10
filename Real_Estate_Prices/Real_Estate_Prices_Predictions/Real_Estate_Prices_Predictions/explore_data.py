@@ -1,8 +1,8 @@
 '''
 This goes through the data exploration process
 
-I am only going to explore the training dataset and then use those insights to clean
-both the training and the testing datasets
+I am only going to explore the training dataset and then use those insights to
+transform both the training and the testing datasets
 '''
 
 def main(df):
@@ -23,13 +23,17 @@ def continuous_v_categorical(df, colnames):
     is continuous or categorical, and also gives us a sense of how many n/a values are
     in a given column
 
+    My analysis of this output can be found in the continuout_v_categorical_analyses text
+    file in the data folder. This analysis also draws from information given in the
+    data_description text file also in the data folder. As part of this analysis, I also used iPython
+    to get a deeper look at the composition of each column. The code is not included here.
+
     Inputs:
         df: a pandas dataframe we are exploring
         colnames: a python index object with the names of the columns
 
     Outputs: None
     '''
-    #!!!THIS IS WHERE I LEFT OFF LAST TIME!!!
     #loops through all the column names
     for col in colnames:
         #creates an object for the column we are using
