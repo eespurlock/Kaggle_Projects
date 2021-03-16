@@ -25,6 +25,7 @@ from joblib import dump, load
 
 #import other python files I have written
 import explore_data
+import transform_data
 
 print("Imports complete")
 
@@ -43,6 +44,9 @@ def main():
     #now we will explore our data
     explore_data.main(training_df)
     print("Back in main")
+
+    #now we will transform our data
+    transform_data.main(training_df)
 
 def load_data():
     '''

@@ -11,21 +11,22 @@ ID: uniquely identifies each home
 
 MSSubClass: Identifies the type of dwelling
 	The types of dwelling include
-		Size:
-			1-story
-			1-1/2-story
-			2-story
-			2-1/2-story
-			Split or Multi-Level
-			Split Foyer
-			Duplex
-			Has Attic (only mentioned once in reference to 1-story homes)
-			If itis a Planned Unit Development (PUD)
-			If it is a 2 family conversion
-		Age:
-			1946 and Newer
-			1945 and Older
-			All ages
+		20: 1-STORY 1946 & NEWER ALL STYLES
+        30: 1-STORY 1945 & OLDER
+        40: 1-STORY W/FINISHED ATTIC ALL AGES
+        45: 1-1/2 STORY - UNFINISHED ALL AGES
+        50: 1-1/2 STORY FINISHED ALL AGES
+        60: 2-STORY 1946 & NEWER
+        70: 2-STORY 1945 & OLDER
+        75: 2-1/2 STORY ALL AGES
+        80: SPLIT OR MULTI-LEVEL
+        85: SPLIT FOYER
+        90: DUPLEX - ALL STYLES AND AGES
+       120: 1-STORY PUD (Planned Unit Development) - 1946 & NEWER
+       150: 1-1/2 STORY PUD - ALL AGES
+       160: 2-STORY PUD - 1946 & NEWER
+       180: PUD - MULTILEVEL - INCL SPLIT LEV/FOYER
+       190: 2 FAMILY CONVERSION - ALL STYLES AND AGES
 	1: Even though the column is numeric, we are going to look at this as a categorical variable for 2 reasons
 		A: There are a finite number of categories
 		B: It does not appear that increasing / decreasing numbers are correlated to the size or
@@ -92,6 +93,10 @@ Alley: Type of alley access to property
 
 LotShape: General shape of property
 	Is on a scale that goes from regular through slightly and moderately irregular to irregular
+	Reg:Regular	
+	IR1: Slightly irregular
+	IR2: Moderately Irregular
+	IR3: Irregular
 	1: As there are only 4 options, this looks like a categorical variable, but I am going to treat
 		this like a continuous variable because the different values are correlated with how
 		irregular the lot shape is
@@ -150,14 +155,9 @@ LandSlope: Slope of property
 Neighborhood: Physical locations within Ames city limits
 	1: As each of the values maps to a specific neighborhood, this is definitely a categorical variable
 	2: There are no n/a values
-	3: I have 2 options here
-		A: Use the data as-is
-		B: Create new columns for each of the neighborhoods to indicate if the property is in them or not
-			I would prefer not to go down this route because there are so many values here and going down
-			that path would take a lot of time and memory.
-			However, there is a very likely chance that a home being in a specific neighborhood will have
-			a profound impact on the price. In all likelihood, there are at least a couple of neighborhoods
-			that would be very predictive of price.
+	3: I am going to create new columns for each of the neighborhoods to indicate if the property is in 
+		them or not. There is a very likely chance that a home being in a specific neighborhood will have
+		a profound impact on the price.
 
 Codition 1 and Condition 2: Proximity to various conditions
 	Artery: Adjacent to arterial street
@@ -303,8 +303,8 @@ ExterQual: Evaluates the quality of the material on the exterior
 	Po: Poor
 	1: Because we can rank these from best to worst, this is a continuous variable
 	2: There are no n/a values
-	3: I am going to change this column to instead be strings to ints ranging from 1 (the best)
-		to 5 (the worst) and then combine this variable with ExterCond
+	3: I am going to change this column to instead be strings to ints ranging from 5 (the best)
+		to 1 (the worst) and then combine this variable with ExterCond
 
 ExterCond: : Evaluates the present condition of the material on the exterior 
 	Ex: Excellent
@@ -314,8 +314,8 @@ ExterCond: : Evaluates the present condition of the material on the exterior
 	Po: Poor
 	1: Because we can rank these from best to worst, this is a continuous variable
 	2: There are no n/a values
-	3: I am going to change this column to instead be strings to ints ranging from 1 (the best)
-		to 5 (the worst) and then combine this variable with ExterQual
+	3: I am going to change this column to instead be strings to ints ranging from 5 (the best)
+		to 1 (the worst) and then combine this variable with ExterQual
 
 Because Quality and Condition seem relatively similar, I am going to create 2 new columns that
 combine the two scores.
@@ -421,7 +421,7 @@ HeatingQC: Heating quality and condition
 	Po: Poor
 	1: Because we can rank this from best to worst, this is continuous
 	2: There are no n/a values
-	3: I am going to change this column to rank heating quality from best (1) to worst (5)
+	3: I am going to change this column to rank heating quality from best (5) to worst (1)
 		
 CentralAir: Central air conditioning
 	N: No
@@ -494,7 +494,7 @@ KitchenQual: Kitchen quality
 	Fa: Fair
 	1: Because we can rank this from best to worst, this is continuous
 	2: There are no n/a values
-	3: I will rank values in this column from best (1) to worst (4)
+	3: I will rank values in this column from best (4) to worst (1)
        	
 TotRmsAbvGrd: Total rooms above grade (does not include bathrooms)
 	1: Because this refers to the number of things, this is continuous
