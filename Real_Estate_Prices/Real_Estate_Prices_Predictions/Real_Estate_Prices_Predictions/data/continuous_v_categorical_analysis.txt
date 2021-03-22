@@ -159,7 +159,7 @@ Neighborhood: Physical locations within Ames city limits
 		them or not. There is a very likely chance that a home being in a specific neighborhood will have
 		a profound impact on the price.
 
-Codition 1 and Condition 2: Proximity to various conditions
+Condition 1 and Condition 2: Proximity to various conditions
 	Artery: Adjacent to arterial street
 	Feedr: Adjacent to feeder street	
 	Norm: Normal	
@@ -204,17 +204,12 @@ HouseStyle: Style of dwelling
 OverallQual: Rates the overall material and finish of the house from 1 (lowest) to 10 (highest)
 	1: Since higher numbers here are associated with higher quality, this is continuous
 	2: There are no n/a values
-	3: I am going to combine this data with OverallCond
+	3: I am going to use this as-is
 
 OverallCond: Rates the overall condition of the house from 1 (lowest) to 10 (highest)
 	1: Since higher numbers here are associated with better home condition, this is continuous
 	2: There are no n/a values
-	3: I am going to combine this data with OverallQual
-
-Because Quality and Condition seem relatively similar, I am going to create 2 new columns that
-combine the two scores.
-	1: QualCondDiff that takes the difference of the 2 scores
-	2: QualCondAvg that takes the average of the two scores
+	3: I am going to use this as-is
 
 YearBuilt: Original construction date
 	1: Since higher values mean newer homes, this is a continuous variable
@@ -224,9 +219,7 @@ YearBuilt: Original construction date
 YearRemodAdd: Remodel date (same as construction date if no remodeling or additions)
 	1: Since higher values mean newer remodels, this is a continuous variable
 	2: There are no n/a values
-	3: Because some homes have never been remodeled, I am going to change this into 2 columns
-		A: Whether the home has been remodeled or not
-		B: The number of years after the home was built that a remodel occurred
+	3: I am going to change this to indicate if a column was remodeled in a certain year
 
 RoofStyle: Type of roof
 	Flat: Flat
@@ -304,7 +297,7 @@ ExterQual: Evaluates the quality of the material on the exterior
 	1: Because we can rank these from best to worst, this is a continuous variable
 	2: There are no n/a values
 	3: I am going to change this column to instead be strings to ints ranging from 5 (the best)
-		to 1 (the worst) and then combine this variable with ExterCond
+		to 1 (the worst)
 
 ExterCond: : Evaluates the present condition of the material on the exterior 
 	Ex: Excellent
@@ -315,12 +308,7 @@ ExterCond: : Evaluates the present condition of the material on the exterior
 	1: Because we can rank these from best to worst, this is a continuous variable
 	2: There are no n/a values
 	3: I am going to change this column to instead be strings to ints ranging from 5 (the best)
-		to 1 (the worst) and then combine this variable with ExterQual
-
-Because Quality and Condition seem relatively similar, I am going to create 2 new columns that
-combine the two scores.
-	1: ExterQualCondDiff that takes the difference of the 2 scores
-	2: ExterQualCondAvg that takes the average of the two scores
+		to 1 (the worst)
 
 Foundation: Type of foundation
 	BrkTil: Brick & Tile
@@ -494,7 +482,8 @@ KitchenQual: Kitchen quality
 	Fa: Fair
 	1: Because we can rank this from best to worst, this is continuous
 	2: There are no n/a values
-	3: I will rank values in this column from best (4) to worst (1)
+	3: I will rank values in this column from best (5) to worst (1) (because there are no poor quality
+		kitchens, this will really go from 5 to 2)
        	
 TotRmsAbvGrd: Total rooms above grade (does not include bathrooms)
 	1: Because this refers to the number of things, this is continuous
@@ -579,7 +568,7 @@ GarageQual: Garage quality
 	1: Because we can rank these from best to worst, this is a continuous variable
 	2: n/a values indicate no garage
 	3: I am going to change this column to instead be strings to ints ranging from 0 (no garage)
-		to 5 (the best) and then combine this variable with GarageCond
+		to 5 (the best)
 		
 GarageCond: Garage condition
 	Ex: Excellent
@@ -591,7 +580,7 @@ GarageCond: Garage condition
 	1: Because we can rank these from best to worst, this is a continuous variable
 	2: n/a values indicate no garage
 	3: I am going to change this column to instead be strings to ints ranging from 0 (no garage)
-		to 5 (the best) and then combine this variable with GarageQual
+		to 5 (the best)
 
 Because Quality and Condition seem relatively similar, I am going to create 2 new columns that
 combine the two scores.

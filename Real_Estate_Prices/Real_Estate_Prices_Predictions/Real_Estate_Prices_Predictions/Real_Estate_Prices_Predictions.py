@@ -27,7 +27,9 @@ from joblib import dump, load
 import explore_data
 import transform_data
 
-print("Imports complete")
+#the name of the column we want to predict
+TO_PREDICT = 'SalePrice'
+
 
 def main():
     '''
@@ -47,6 +49,7 @@ def main():
 
     #now we will transform our data
     transform_data.main(training_df)
+    print("Back in main")
 
 def load_data():
     '''

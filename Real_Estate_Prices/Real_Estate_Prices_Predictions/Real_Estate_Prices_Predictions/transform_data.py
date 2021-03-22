@@ -7,9 +7,10 @@ into a dataset that we can put into our machine learning pipeline
 import pandas as pd
 
 #a list of columns that we are not going to use
-#!!!I have not written the code dealing with this yet!!!
-DEL_COLS = ['ID', 'Utilities', 'BldgType', 'BsmtCond', 'Heating', 'GarageArea',
-            'PoolQC', 'MiscFeature', 'MiscVal', 'SalePrice']
+#I am not writing code to deal with these columns because they will
+#simply not be added to the new dataframe I create
+#DEL_COLS = ['ID', 'Utilities', 'BldgType', 'BsmtCond', 'Heating', 'GarageArea',
+#            'PoolQC', 'MiscFeature', 'MiscVal']
 
 #a list of columns we will use as-is
 AS_IS_COLS = ['LotArea', 'YearBuilt', 'TotalBsmtSF', '1stFlrSF', '2ndFlrSF',
@@ -17,11 +18,12 @@ AS_IS_COLS = ['LotArea', 'YearBuilt', 'TotalBsmtSF', '1stFlrSF', '2ndFlrSF',
               'FullBath', 'HalfBath', 'BedroomAbvGr', 'KitchenAbvGr',
               'TotRmsAbvGrd', 'Fireplaces', 'GarageYrBlt', 'GarageCars',
               'WoodDeckSF', 'OpenPorchSF', 'EnclosedPorch', '3SsnPorch',
-              'ScreenPorch', 'PoolArea', 'LotFrontage', 'MasVnrArea']
+              'ScreenPorch', 'PoolArea', 'LotFrontage', 'MasVnrArea',
+              'OverallQual', 'OverallCond', 'BsmtUnfSF', 'SalePrice']
 
 #a list of categorical columns where we will create new columns for each value
 #that indicates if a property falls into that category or not
-CAT_COLS_LST = ["MasVnrType", "YrSold", "Neighborhood"]
+CAT_COLS_LST = ["MasVnrType", "YrSold", "Neighborhood", "YearRemodAdd"]
 
 #The following is to increase readability
 #These are dictionaries of the various categorical columns describing the values
@@ -97,33 +99,36 @@ ZERO_ONE_DICT = {"Street": ("Is_paved", ["Pave"]),
 #describing the values in the original columns and the values we want to map them on to
 LOTSHAPE = {"Reg": 0, "IR1": 1, "IR2": 2, "IR3": 3}
 LANDSLOPE = {"Gtl": 0, "Mod": 1, "Sev": 2}
+BASEEXPOSURE = {"Gd": 4, "Av": 3, "Mn": 2, "No": 1, "NA": 0}
+BASEQUAL = {"Ex": 100, "Gd": 90, "TA": 80, "Fa": 70, "NA": 0}
+EX_TO_PO = {"Ex": 5, "Gd": 4, "TA": 3, "Fa": 2, "Po": 1, "NA": 0}
+GARAGEFINISH = {"Fin": 3, "RFn": 2, "Unf": 1, "NA": 0}
 
 #a dictionary of dictionaries describing continuous variables that need to be
 #remapped. The 2nd dictionary will describe what the original values need to
 #be mapped to
-#!!!I have not written the code dealing with this yet!!!
-#!!!use this website for guidance on remapping
-#https://www.geeksforgeeks.org/using-dictionary-to-remap-values-in-pandas-dataframe-columns/
-CONT_REMAP_DICT = {"LotShape": LOTSHAPE, "LandSlope": LANDSLOPE}
+CONT_REMAP_DICT = {"LotShape": LOTSHAPE, "LandSlope": LANDSLOPE, "BsmtExposure": BASEEXPOSURE,
+                   "BsmtQual": BASEQUAL, "HeatingQC": EX_TO_PO, "KitchenQual": EX_TO_PO,
+                   "FireplaceQu": EX_TO_PO, "GarageFinish": GARAGEFINISH,
+                   "ExterQual": EX_TO_PO, "ExterCond": EX_TO_PO,
+                   "GarageQual": EX_TO_PO, "GarageCond": EX_TO_PO}
 
 #a list of tuples with a column name and the value that the column's n/a value
 #should be mapped onto
-NA_HANDLING_COLS = [("LotFrontage", 0), ("MasVnrArea", "MEAN")]
+NA_HANDLING_COLS = [("LotFrontage", 0), ("MasVnrArea", "MEAN"), ("BsmtExposure", "NA"),
+                    ("BsmtQual", "NA"), ("FireplaceQu", "NA"), ("GarageFinish", "NA"),
+                    ("GarageQual", "NA"), ("GarageCond", "NA"),
+                    ("BsmtFinType1", "NA"), ("BsmtFinType2", "NA")]
 
-# !!! columns that I have not dealt with yet !!!
-#Codition 1 / Condition 2
-#OverallQual / OverallCond
-#YearRemodAdd
-#Exterior1st / Exterior2nd
-#ExterQual / ExterCond
-#BsmtQual
-#BsmtExposure
-#BsmtFinType1 / BsmtFinType2 / BsmtFinSF1 / BsmtFinSF2 / BsmtUnfSF
-#HeatingQC
-#KitchenQual
-#FireplaceQu
-#GarageFinish
-#GarageQual / GarageCond
+#a list of tuples with a column name beginning and the names of 2 columns that
+#track the same metric. The values in both of these columns need to become
+#their own column that indicates if either of these columns holds a specific
+#value
+SAME_METRIC_COLS = [("Condition", ("Condition1", "Condition2")),
+                    ("Exterior", ("Exterior1st", "Exterior2nd"))]
+
+#a list of the basement types and square footage that we need to combine
+BASEMENT_SQ_FT_COLS = [('BsmtFinType1', 'BsmtFinSF1'), ('BsmtFinType2', 'BsmtFinSF2')]
 
 def main(df):
     '''
@@ -133,16 +138,23 @@ def main(df):
 
     Outputs: new_df: the pandas dataframe we have created by transforming df
     '''
+    #a list of tuples of the functions we need to go through and their input
+    FUNCTIONS_LST = [(as_is_transform, AS_IS_COLS),
+        (categorical_transform, CAT_COLS_LST),
+        (categorical_transform_2, CAT_COLS_DICT),
+        (zero_one_transform, ZERO_ONE_DICT),
+        (remap_transform, CONT_REMAP_DICT),
+        (combine_same_metric_transform, SAME_METRIC_COLS),
+        (sq_ft_combination, BASEMENT_SQ_FT_COLS)]
     #create a new dataframe that is empty
     new_df = pd.DataFrame()
     #first, we deal with n/a values so the columns can be transformed with no issue
     df = fill_na(df, NA_HANDLING_COLS)
-    #!!!We are going to re-write these lines to be more functional programming
-    #but we are saving that until after all of the other code is written!!!
-    new_df = as_is_transform(df, new_df, AS_IS_COLS)
-    new_df = categorical_transform(df, new_df, CAT_COLS_LST)
-    new_df = categorical_transform_2(df, new_df, CAT_COLS_DICT)
-    new_df = zero_one_transform(df, new_df, ZERO_ONE_DICT)
+    
+    #loop through the functions we need to transform the data
+    for tup in FUNCTIONS_LST:
+        funct, input = tup
+        new_df = funct(df, new_df, input)
     return(new_df)
 
 def fill_na(df, cols_lst):
@@ -162,6 +174,7 @@ def fill_na(df, cols_lst):
         if new_value == "MEAN":
             new_value = df[colname].mean()
         df[colname] = df[colname].fillna(new_value)
+    return(df)
 
 def as_is_transform(df, new_df, cols_lst):
     '''
@@ -242,4 +255,118 @@ def zero_one_transform(df, new_df, cols_dict):
         new_colname, one_lst = tup
         #create a new column based on the old one
         new_df[new_colname] = df[colname].apply(lambda x: 1 if x in one_lst else 0)
+    return(new_df)
+
+def remap_transform(df, new_df, cols_dict):
+    '''
+    Takes columns that are currently strings and remaps them to ints based
+    on the values in the dictionary
+
+    Inputs:
+        df: the original pandas dataframe
+        new_df: the pandas dataframe we are in the process of creating
+        cols_dict: a dictionary of dictionaries describing what the values 
+            in the column should be mapped on to
+
+    Outputs: new_df: the pandas dataframe we are creating by transforming df
+    '''
+    #get the column names for new_df
+    all_new_colnames = new_df.columns
+    #loop through the dictionary
+    for colname, dict in cols_dict.items():
+            new_df[colname] = df[colname].map(dict)
+    return(new_df)
+
+def combine_same_metric_transform(df, new_df, cols_lst):
+    '''
+    This function takes two columns that have the same values in them and creates
+        new columns that will say if the unique values are in either of the two columns
+    
+    Inputs:
+        df: the original pandas dataframe
+        new_df: the pandas dataframe we are in the process of creating
+        cols_lst: a list of tuples describing the columns that have the same
+            values in them
+
+    Outputs: new_df: the pandas dataframe we are creating by transforming df
+
+    '''
+    #loop through the list
+    for tup in cols_lst:
+        #create a list that will hold the unique values from both column 1 and column 2
+        col_beginning, col_tup = tup
+        col1, col2 = col_tup
+        two_col_unique = get_unique(df, col1, col2)
+        #check to see if a vlue is in either column
+        for val in two_col_unique:
+            new_colname = col_beginning + "_" + val
+            new_df[new_colname] = (df[[col1, col2]].eq(val)).any(axis=1)
+            new_df[new_colname] = new_df[new_colname].apply(lambda x: 1 if x else 0)
+    return(new_df)
+
+def get_unique(df, col1, col2):
+    '''
+    Takes 2 columns from a dataframe and gets the unique values that are
+        are across both of them
+
+    Inputs:
+        df: the dataframe with the 2 columns
+        col1: (string) the name of the 1st columns
+        col2: (string) the name of the 2nd column
+
+    Outputs: two_col_unique: a list of the unique values in the 2 columns
+    '''
+    two_col_unique = [] 
+    for val in df[col1].unique():
+        two_col_unique.append(val)
+    for val in df[col2].unique():
+        if val not in two_col_unique:
+            two_col_unique.append(val)
+    return(two_col_unique)
+
+def sq_ft_combination(df, new_df, cols_lst):
+    '''
+    This function is specifically written to combine the types of basement
+        finishes with the square footage of that finish type
+
+    Inputs:
+        df: the original pandas dataframe
+        new_df: the pandas dataframe we are in the process of creating
+        cols_lst: a list of the basement types and square feet that we
+            want to use to create new columns
+
+    Outputs: new_df: the pandas dataframe we are creating by transforming df
+    '''
+    #get the unique values of the two columns
+    two_col_unique_dirty = get_unique(df, cols_lst[0][0], cols_lst[1][0])
+    #we now need to take the values "NA", "Unf" out of our list of unique values
+    #unfinished square footage has already been recorded in its own column
+    #and na values merely mean there is no basement
+    two_col_unique=[]
+    for val in two_col_unique_dirty:
+        if val not in ["NA", "Unf"]:
+            two_col_unique.append(val)
+    #create a counter
+    count = 1
+    
+    #now we will combine the type of the basement type with its square footage
+    for type_sqft_tup in cols_lst:
+        bsmt_type, sqft = type_sqft_tup
+        df[str(count)] = list(zip(df[bsmt_type], df[sqft]))
+        count += 1
+    
+    #now we need to loop through the 2 new columns
+    for num in ["1", "2"]:
+        #and we need to loop through the unique values
+        for val in two_col_unique:
+            new_colname = val + num
+            df[new_colname] = df[num].apply(lambda x: x[1] if x[0] == val else 0)
+
+    #now we combine the columns that track the same type
+    for val in two_col_unique:
+        col1 = val + "1"
+        col2 = val + "2"
+        new_colname = "Bsmt_" + val + "_Sqft"
+        new_df[new_colname] = df[col1] + df[col2]
+
     return(new_df)
