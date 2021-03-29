@@ -1,5 +1,5 @@
 '''
-This uses the insights gleaned from the explore_data file to transform our data
+This file uses the insights gleaned from the explore_data file to transform our data
 into a dataset that we can put into our machine learning pipeline
 '''
 
@@ -12,6 +12,9 @@ import pandas as pd
 #DEL_COLS = ['ID', 'Utilities', 'BldgType', 'BsmtCond', 'Heating', 'GarageArea',
 #            'PoolQC', 'MiscFeature', 'MiscVal']
 
+#Constant that is our feature column
+FEATURE = 'SalePrice'
+
 #a list of columns we will use as-is
 AS_IS_COLS = ['LotArea', 'YearBuilt', 'TotalBsmtSF', '1stFlrSF', '2ndFlrSF',
               'LowQualFinSF', 'GrLivArea', 'BsmtFullBath', 'BsmtHalfBath',
@@ -19,7 +22,7 @@ AS_IS_COLS = ['LotArea', 'YearBuilt', 'TotalBsmtSF', '1stFlrSF', '2ndFlrSF',
               'TotRmsAbvGrd', 'Fireplaces', 'GarageYrBlt', 'GarageCars',
               'WoodDeckSF', 'OpenPorchSF', 'EnclosedPorch', '3SsnPorch',
               'ScreenPorch', 'PoolArea', 'LotFrontage', 'MasVnrArea',
-              'OverallQual', 'OverallCond', 'BsmtUnfSF', 'SalePrice']
+              'OverallQual', 'OverallCond', 'BsmtUnfSF']
 
 #a list of categorical columns where we will create new columns for each value
 #that indicates if a property falls into that category or not
@@ -118,7 +121,8 @@ CONT_REMAP_DICT = {"LotShape": LOTSHAPE, "LandSlope": LANDSLOPE, "BsmtExposure":
 NA_HANDLING_COLS = [("LotFrontage", 0), ("MasVnrArea", "MEAN"), ("BsmtExposure", "NA"),
                     ("BsmtQual", "NA"), ("FireplaceQu", "NA"), ("GarageFinish", "NA"),
                     ("GarageQual", "NA"), ("GarageCond", "NA"),
-                    ("BsmtFinType1", "NA"), ("BsmtFinType2", "NA")]
+                    ("BsmtFinType1", "NA"), ("BsmtFinType2", "NA"),
+                    ("GarageYrBlt", 0)]
 
 #a list of tuples with a column name beginning and the names of 2 columns that
 #track the same metric. The values in both of these columns need to become
@@ -137,6 +141,7 @@ def main(df):
     Inputs: df: a Pandas dataframe we want to transform
 
     Outputs: new_df: the pandas dataframe we have created by transforming df
+        feature_df: a pandas dataframe with just the feature we want to predict for
     '''
     #a list of tuples of the functions we need to go through and their input
     FUNCTIONS_LST = [(as_is_transform, AS_IS_COLS),
@@ -146,8 +151,13 @@ def main(df):
         (remap_transform, CONT_REMAP_DICT),
         (combine_same_metric_transform, SAME_METRIC_COLS),
         (sq_ft_combination, BASEMENT_SQ_FT_COLS)]
-    #create a new dataframe that is empty
+    #create a new dataframe that is empty for both features and variables
     new_df = pd.DataFrame()
+    feature_df = pd.DataFrame()
+
+    #creates the feature dataframe
+    feature_df[FEATURE] = df[FEATURE]
+
     #first, we deal with n/a values so the columns can be transformed with no issue
     df = fill_na(df, NA_HANDLING_COLS)
     
@@ -155,7 +165,8 @@ def main(df):
     for tup in FUNCTIONS_LST:
         funct, input = tup
         new_df = funct(df, new_df, input)
-    return(new_df)
+
+    return(new_df, feature_df)
 
 def fill_na(df, cols_lst):
     '''

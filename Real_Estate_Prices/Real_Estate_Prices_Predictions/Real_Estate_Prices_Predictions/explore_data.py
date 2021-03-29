@@ -1,5 +1,5 @@
 '''
-This goes through the data exploration process
+This file goes through the data exploration process
 
 I am only going to explore the training dataset and then use those insights to
 transform both the training and the testing datasets
