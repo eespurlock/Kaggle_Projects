@@ -1,0 +1,118 @@
+After running the various models, I will now evaluate how well they performed based on their R-squared
+scores and their mean squared error.
+
+R-squared describes how much of the variance can be described by our models. The closer
+our R-squared is to one, the better our model.
+
+The mean squared error calculates the difference between what our models estimated and the
+actual home prices. The lower the mean squared error, the better our model.
+
+Ada Boosting: 
+	the "best" R-squared score we get with these models is ~0.198, which is quite bad
+	the lowest mean squared error has the model off by ~$76,000, which is ~42% of the
+		average home sles price, so this is not a great score
+	Based on these results, I do not believe that Ada Boosting is a good model to use to predict
+		these housing sales prices.
+
+Bagging: 
+	the best R-squared scores for bagging are actually not too bad, the three scores closest
+	to 1 are:
+		N estimators = 100 and max samples = 500 : ~ 0.74
+		N estimators = 200 and max samples = 500 : ~ 0.73
+		N estimators = 50 and max samples = 500 : ~ 0.71
+	the best mean squared errors for bagging are the same models as have the best R-squared values:
+		N estimators = 100 and max samples = 500 : $43,433.9 or ~24% average sales price
+		N estimators = 200 and max samples = 500 : $44,298.8 or ~24.4% average sales price
+		N estimators = 50 and max samples = 500 : $45,819.3 or ~25.3% average sales price
+	Based on these results, I would say that bagging is not a terrible model to use to predict
+		housing prices. However, having a model that gets housing prices wrong by 25% is obviously 
+		not ideal.
+
+Decision Trees: (note, because of the capabilities of my computer, I was not able to run
+	as many decision tree models as I would have liked)
+	
+	the best R-squared value for decision trees is 0.547, which is not really that good
+	the best mean squared error for decision trees has the model off by ~ $57,000 which is 
+		~ 31% of the average housing price
+	Based on these models, I would say that decision trees are not the best models to use to
+		predict housing prices
+
+Extra Trees:
+	the 8 best R-squared scores for extra trees are all above 0.7 the three best are:
+		N estimators = 3000 & max depth = 20: ~ 0.74
+		N estimators = 3000 & max depth = 200: ~ 0.73
+		N estimators = 1000 & max depth = 100: ~ 0.73
+	the three best models for mean squared erros are the same as for the best R-squared
+		N estimators = 3000 & max depth = 20: $43,134.5 or ~23.8% average sales price
+		N estimators = 3000 & max depth = 200: $44,045.3 or ~24.3% average sales price
+		N estimators = 1000 & max depth = 100: 44459.1 or ~24.5% average sales price
+	As with bagging, we can see that extra trees are acceptable models to use, but with errors that
+		are ~23% of an average home's sales price, they are not ideal.
+
+K Nearest Neighbors:
+	the best R-squared value is when you have only one neighbor, and the R-squared value is ~0.56,
+		which is not great
+	the best mean squared error has the price off by ~56,000, or ~31% of average home price
+	This model is about the same as the best decision tree, and again I would say it is definitey
+		not the model I would want to use.
+
+Linear Regression:
+	both of the linear regression models I ran (for n jobs = 1 and n jobs = -1) we get an R-squared 
+		value of ~0.821 which is quite good
+	both of the models also give us the same mean squared error of $35,937.8 os ~19.9% of the
+		average home value
+	These models are actually not too bad, especially in comparison to the other models we have
+		evaluated in this document. These models would give us home prices that are reasonably
+		close to the actual home prices. However, 20% is still somewhat high for the home value
+		to be off by.
+
+Logistic Regression:
+	the best R-squared value is ~0.43, which is one of the worse values we have seen
+	the best mean squared error is ~$64,000 or ~36% of the average home price
+	Based on these models, I would say that logistic regression is not the best model to use
+		to predict these housing prices.
+
+Random Forests:
+	most of the random forest models have an R-squared value > 0.7, and the top three are close
+	to 0.8
+		N estimators = 1000 & max depth = 50: ~ 0.80
+		N estimators = 3000 & max depth = 200: ~ 0.79
+		N estimators = 1000 & max depth = 50: ~ 0.78
+	the best random forest mean squared errors are all off by < $40,000
+		N estimators = 1000 & max depth = 50: $37,729.8 or ~20.8% average home price
+		N estimators = 3000 & max depth = 200: $38,710 or ~21.4% average home price
+		N estimators = 1000 & max depth = 50: 39124.5 or ~21.6% average home price
+	Based on these models, I would say random forests are not a bad way to estimate home prices. They
+		are not as good of models as linear regression, but are off by < 22% of the average home
+		price.
+
+Ridge:
+	all of the R-squared values for these models are better than any R-squared values
+	we have seen for any other model and the top 3 are all ~0.85
+		Alpha = 2.0 & max iterations = 1000: ~0.848
+		Alpha = 2.0 & max iterations = 3000: ~0.848
+		Alpha = 2.0 & max iterations = 5000: ~0.848
+	as with the R-squared values, all of the mean squared errors are better than what we have
+	seen before
+		Alpha = 2.0 & max iterations = 1000: $33,240.1 or ~18.4% of average home prices
+		Alpha = 2.0 & max iterations = 3000: $33,240.1 or ~18.4% of average home prices
+		Alpha = 2.0 & max iterations = 5000: $33,240.1 or ~18.4% of average home prices
+	Based on these models, I think a ridge model would be the best we can use to predict home prices
+
+Conclusion: In order to predict home pricing in this area, I would use a Ridge model. I would use an
+Alpha = 2.0 because all the best models had that alpha and I would use max iterations of 5,000.
+Even though 1,000 and 3,000 iterations had the same outcomes, I would imagine that having more
+iterations would be more precise the more data you would enter. However, if memory and time were
+a consideration, I would use max iterations of 1,000.
+	
+		
+
+	
+	
+
+
+	
+	
+	
+	
+

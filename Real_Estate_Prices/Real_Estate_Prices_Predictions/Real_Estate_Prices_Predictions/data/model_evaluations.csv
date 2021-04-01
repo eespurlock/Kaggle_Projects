@@ -1,0 +1,211 @@
+model_name,model_inputs,evaluation_name,result
+"Ada Boosting","n_estimators: 10 & learning_rate: 0.5","Mean Squared Error",76946.9
+"Ada Boosting","n_estimators: 10 & learning_rate: 0.5","R2 Score",0.185439
+"Ada Boosting","n_estimators: 10 & learning_rate: 1.0","Mean Squared Error",78184.9
+"Ada Boosting","n_estimators: 10 & learning_rate: 1.0","R2 Score",0.159017
+"Ada Boosting","n_estimators: 10 & learning_rate: 2.0","Mean Squared Error",100876
+"Ada Boosting","n_estimators: 10 & learning_rate: 2.0","R2 Score",-0.39995
+"Ada Boosting","n_estimators: 100 & learning_rate: 0.5","Mean Squared Error",76357.3
+"Ada Boosting","n_estimators: 100 & learning_rate: 0.5","R2 Score",0.197874
+"Ada Boosting","n_estimators: 100 & learning_rate: 1.0","Mean Squared Error",78184.9
+"Ada Boosting","n_estimators: 100 & learning_rate: 1.0","R2 Score",0.159017
+"Ada Boosting","n_estimators: 100 & learning_rate: 2.0","Mean Squared Error",83053.6
+"Ada Boosting","n_estimators: 100 & learning_rate: 2.0","R2 Score",0.051017
+"Ada Boosting","n_estimators: 200 & learning_rate: 0.5","Mean Squared Error",76357.3
+"Ada Boosting","n_estimators: 200 & learning_rate: 0.5","R2 Score",0.197874
+"Ada Boosting","n_estimators: 200 & learning_rate: 1.0","Mean Squared Error",78184.9
+"Ada Boosting","n_estimators: 200 & learning_rate: 1.0","R2 Score",0.159017
+"Ada Boosting","n_estimators: 200 & learning_rate: 2.0","Mean Squared Error",80608.6
+"Ada Boosting","n_estimators: 200 & learning_rate: 2.0","R2 Score",0.106069
+"Ada Boosting","n_estimators: 30 & learning_rate: 0.5","Mean Squared Error",76357.3
+"Ada Boosting","n_estimators: 30 & learning_rate: 0.5","R2 Score",0.197874
+"Ada Boosting","n_estimators: 30 & learning_rate: 1.0","Mean Squared Error",77128
+"Ada Boosting","n_estimators: 30 & learning_rate: 1.0","R2 Score",0.1816
+"Ada Boosting","n_estimators: 30 & learning_rate: 2.0","Mean Squared Error",100447
+"Ada Boosting","n_estimators: 30 & learning_rate: 2.0","R2 Score",-0.388082
+"Ada Boosting","n_estimators: 5 & learning_rate: 0.5","Mean Squared Error",77286.1
+"Ada Boosting","n_estimators: 5 & learning_rate: 0.5","R2 Score",0.178241
+"Ada Boosting","n_estimators: 5 & learning_rate: 1.0","Mean Squared Error",78184.9
+"Ada Boosting","n_estimators: 5 & learning_rate: 1.0","R2 Score",0.159017
+"Ada Boosting","n_estimators: 5 & learning_rate: 2.0","Mean Squared Error",81043.1
+"Ada Boosting","n_estimators: 5 & learning_rate: 2.0","R2 Score",0.0964067
+"Ada Boosting","n_estimators: 50 & learning_rate: 0.5","Mean Squared Error",76699.1
+"Ada Boosting","n_estimators: 50 & learning_rate: 0.5","R2 Score",0.190677
+"Ada Boosting","n_estimators: 50 & learning_rate: 1.0","Mean Squared Error",78276
+"Ada Boosting","n_estimators: 50 & learning_rate: 1.0","R2 Score",0.157057
+"Ada Boosting","n_estimators: 50 & learning_rate: 2.0","Mean Squared Error",108649
+"Ada Boosting","n_estimators: 50 & learning_rate: 2.0","R2 Score",-0.624036
+Bagging,"n_estimators: 10 & max_samples: 10","Mean Squared Error",105762
+Bagging,"n_estimators: 10 & max_samples: 10","R2 Score",-0.53887
+Bagging,"n_estimators: 10 & max_samples: 100","Mean Squared Error",95628.9
+Bagging,"n_estimators: 10 & max_samples: 100","R2 Score",-0.258112
+Bagging,"n_estimators: 10 & max_samples: 50","Mean Squared Error",95815.5
+Bagging,"n_estimators: 10 & max_samples: 50","R2 Score",-0.263028
+Bagging,"n_estimators: 10 & max_samples: 500","Mean Squared Error",77806.3
+Bagging,"n_estimators: 10 & max_samples: 500","R2 Score",0.167142
+Bagging,"n_estimators: 100 & max_samples: 10","Mean Squared Error",87405.8
+Bagging,"n_estimators: 100 & max_samples: 10","R2 Score",-0.0510452
+Bagging,"n_estimators: 100 & max_samples: 100","Mean Squared Error",60550.3
+Bagging,"n_estimators: 100 & max_samples: 100","R2 Score",0.495602
+Bagging,"n_estimators: 100 & max_samples: 50","Mean Squared Error",69382.7
+Bagging,"n_estimators: 100 & max_samples: 50","R2 Score",0.337718
+Bagging,"n_estimators: 100 & max_samples: 500","Mean Squared Error",43433.9
+Bagging,"n_estimators: 100 & max_samples: 500","R2 Score",0.740463
+Bagging,"n_estimators: 200 & max_samples: 10","Mean Squared Error",69032.8
+Bagging,"n_estimators: 200 & max_samples: 10","R2 Score",0.344379
+Bagging,"n_estimators: 200 & max_samples: 100","Mean Squared Error",55416.5
+Bagging,"n_estimators: 200 & max_samples: 100","R2 Score",0.577507
+Bagging,"n_estimators: 200 & max_samples: 50","Mean Squared Error",64099.9
+Bagging,"n_estimators: 200 & max_samples: 50","R2 Score",0.43473
+Bagging,"n_estimators: 200 & max_samples: 500","Mean Squared Error",44298.8
+Bagging,"n_estimators: 200 & max_samples: 500","R2 Score",0.730024
+Bagging,"n_estimators: 30 & max_samples: 10","Mean Squared Error",97238.3
+Bagging,"n_estimators: 30 & max_samples: 10","R2 Score",-0.300815
+Bagging,"n_estimators: 30 & max_samples: 100","Mean Squared Error",65211.4
+Bagging,"n_estimators: 30 & max_samples: 100","R2 Score",0.414956
+Bagging,"n_estimators: 30 & max_samples: 50","Mean Squared Error",80505.7
+Bagging,"n_estimators: 30 & max_samples: 50","R2 Score",0.10835
+Bagging,"n_estimators: 30 & max_samples: 500","Mean Squared Error",51295.8
+Bagging,"n_estimators: 30 & max_samples: 500","R2 Score",0.638003
+Bagging,"n_estimators: 5 & max_samples: 10","Mean Squared Error",133673
+Bagging,"n_estimators: 5 & max_samples: 10","R2 Score",-1.45828
+Bagging,"n_estimators: 5 & max_samples: 100","Mean Squared Error",88321.8
+Bagging,"n_estimators: 5 & max_samples: 100","R2 Score",-0.0731915
+Bagging,"n_estimators: 5 & max_samples: 50","Mean Squared Error",93770
+Bagging,"n_estimators: 5 & max_samples: 50","R2 Score",-0.209676
+Bagging,"n_estimators: 5 & max_samples: 500","Mean Squared Error",78726.9
+Bagging,"n_estimators: 5 & max_samples: 500","R2 Score",0.147317
+Bagging,"n_estimators: 50 & max_samples: 10","Mean Squared Error",88846.6
+Bagging,"n_estimators: 50 & max_samples: 10","R2 Score",-0.0859814
+Bagging,"n_estimators: 50 & max_samples: 100","Mean Squared Error",68932.6
+Bagging,"n_estimators: 50 & max_samples: 100","R2 Score",0.346282
+Bagging,"n_estimators: 50 & max_samples: 50","Mean Squared Error",72165.6
+Bagging,"n_estimators: 50 & max_samples: 50","R2 Score",0.283525
+Bagging,"n_estimators: 50 & max_samples: 500","Mean Squared Error",45819.3
+Bagging,"n_estimators: 50 & max_samples: 500","R2 Score",0.711173
+"Decision Trees","max_depth: 1","Mean Squared Error",79917.3
+"Decision Trees","max_depth: 1","R2 Score",0.115944
+"Decision Trees","max_depth: 100","Mean Squared Error",58094.9
+"Decision Trees","max_depth: 100","R2 Score",0.53283
+"Decision Trees","max_depth: 20","Mean Squared Error",65765.3
+"Decision Trees","max_depth: 20","R2 Score",0.401324
+"Decision Trees","max_depth: 200","Mean Squared Error",59191.4
+"Decision Trees","max_depth: 200","R2 Score",0.51503
+"Decision Trees","max_depth: 5","Mean Squared Error",78724
+"Decision Trees","max_depth: 5","R2 Score",0.142147
+"Decision Trees","max_depth: 50","Mean Squared Error",57207.1
+"Decision Trees","max_depth: 50","R2 Score",0.547
+"Extra Trees","n_estimators: 1000 & max_depth: 1","Mean Squared Error",97696.2
+"Extra Trees","n_estimators: 1000 & max_depth: 1","R2 Score",-0.321155
+"Extra Trees","n_estimators: 1000 & max_depth: 100","Mean Squared Error",44459.1
+"Extra Trees","n_estimators: 1000 & max_depth: 100","R2 Score",0.726398
+"Extra Trees","n_estimators: 1000 & max_depth: 20","Mean Squared Error",45613
+"Extra Trees","n_estimators: 1000 & max_depth: 20","R2 Score",0.712012
+"Extra Trees","n_estimators: 1000 & max_depth: 200","Mean Squared Error",45429.4
+"Extra Trees","n_estimators: 1000 & max_depth: 200","R2 Score",0.714325
+"Extra Trees","n_estimators: 1000 & max_depth: 5","Mean Squared Error",52300.7
+"Extra Trees","n_estimators: 1000 & max_depth: 5","R2 Score",0.621371
+"Extra Trees","n_estimators: 1000 & max_depth: 50","Mean Squared Error",44984.9
+"Extra Trees","n_estimators: 1000 & max_depth: 50","R2 Score",0.719888
+"Extra Trees","n_estimators: 3000 & max_depth: 1","Mean Squared Error",97748.6
+"Extra Trees","n_estimators: 3000 & max_depth: 1","R2 Score",-0.322573
+"Extra Trees","n_estimators: 3000 & max_depth: 100","Mean Squared Error",44505
+"Extra Trees","n_estimators: 3000 & max_depth: 100","R2 Score",0.725833
+"Extra Trees","n_estimators: 3000 & max_depth: 20","Mean Squared Error",43134.5
+"Extra Trees","n_estimators: 3000 & max_depth: 20","R2 Score",0.742459
+"Extra Trees","n_estimators: 3000 & max_depth: 200","Mean Squared Error",44045.3
+"Extra Trees","n_estimators: 3000 & max_depth: 200","R2 Score",0.731467
+"Extra Trees","n_estimators: 3000 & max_depth: 5","Mean Squared Error",59328.6
+"Extra Trees","n_estimators: 3000 & max_depth: 5","R2 Score",0.512778
+"Extra Trees","n_estimators: 3000 & max_depth: 50","Mean Squared Error",45016.8
+"Extra Trees","n_estimators: 3000 & max_depth: 50","R2 Score",0.71949
+"Extra Trees","n_estimators: 5000 & max_depth: 1","Mean Squared Error",97724.8
+"Extra Trees","n_estimators: 5000 & max_depth: 1","R2 Score",-0.321928
+"Extra Trees","n_estimators: 5000 & max_depth: 5","Mean Squared Error",53353.9
+"Extra Trees","n_estimators: 5000 & max_depth: 5","R2 Score",0.605969
+"K Nearest Neighbors","n_neighbors: 1","Mean Squared Error",56478.4
+"K Nearest Neighbors","n_neighbors: 1","R2 Score",0.558467
+"K Nearest Neighbors","n_neighbors: 10","Mean Squared Error",88943.5
+"K Nearest Neighbors","n_neighbors: 10","R2 Score",-0.0950323
+"K Nearest Neighbors","n_neighbors: 100","Mean Squared Error",87382.9
+"K Nearest Neighbors","n_neighbors: 100","R2 Score",-0.0569413
+"K Nearest Neighbors","n_neighbors: 20","Mean Squared Error",95965.2
+"K Nearest Neighbors","n_neighbors: 20","R2 Score",-0.274752
+"K Nearest Neighbors","n_neighbors: 5","Mean Squared Error",77305.2
+"K Nearest Neighbors","n_neighbors: 5","R2 Score",0.172789
+"K Nearest Neighbors","n_neighbors: 50","Mean Squared Error",83541.1
+"K Nearest Neighbors","n_neighbors: 50","R2 Score",0.0339511
+"Linear Regression","n_jobs: -1","Mean Squared Error",35937.8
+"Linear Regression","n_jobs: -1","R2 Score",0.821227
+"Linear Regression","n_jobs: 1","Mean Squared Error",35937.8
+"Linear Regression","n_jobs: 1","R2 Score",0.821227
+"Logistic Regression","C: 1.0","Mean Squared Error",68301.9
+"Logistic Regression","C: 1.0","R2 Score",0.354251
+"Logistic Regression","C: 1.2","Mean Squared Error",66263.9
+"Logistic Regression","C: 1.2","R2 Score",0.392213
+"Logistic Regression","C: 1.5","Mean Squared Error",64299.2
+"Logistic Regression","C: 1.5","R2 Score",0.42772
+"Logistic Regression","C: 2.0","Mean Squared Error",66547.1
+"Logistic Regression","C: 2.0","R2 Score",0.387005
+"Logistic Regression","C: 2.5","Mean Squared Error",68083.2
+"Logistic Regression","C: 2.5","R2 Score",0.35838
+"Random Forests","n_estimators: 1000 & max_depth: 1","Mean Squared Error",97753.8
+"Random Forests","n_estimators: 1000 & max_depth: 1","R2 Score",-0.322713
+"Random Forests","n_estimators: 1000 & max_depth: 100","Mean Squared Error",39500.5
+"Random Forests","n_estimators: 1000 & max_depth: 100","R2 Score",0.784025
+"Random Forests","n_estimators: 1000 & max_depth: 20","Mean Squared Error",40718.2
+"Random Forests","n_estimators: 1000 & max_depth: 20","R2 Score",0.770504
+"Random Forests","n_estimators: 1000 & max_depth: 200","Mean Squared Error",39456.6
+"Random Forests","n_estimators: 1000 & max_depth: 200","R2 Score",0.784505
+"Random Forests","n_estimators: 1000 & max_depth: 5","Mean Squared Error",51591.7
+"Random Forests","n_estimators: 1000 & max_depth: 5","R2 Score",0.631568
+"Random Forests","n_estimators: 1000 & max_depth: 50","Mean Squared Error",37729.8
+"Random Forests","n_estimators: 1000 & max_depth: 50","R2 Score",0.802954
+"Random Forests","n_estimators: 3000 & max_depth: 1","Mean Squared Error",97753.2
+"Random Forests","n_estimators: 3000 & max_depth: 1","R2 Score",-0.322697
+"Random Forests","n_estimators: 3000 & max_depth: 100","Mean Squared Error",39426.9
+"Random Forests","n_estimators: 3000 & max_depth: 100","R2 Score",0.78483
+"Random Forests","n_estimators: 3000 & max_depth: 20","Mean Squared Error",40613.7
+"Random Forests","n_estimators: 3000 & max_depth: 20","R2 Score",0.77168
+"Random Forests","n_estimators: 3000 & max_depth: 200","Mean Squared Error",38710
+"Random Forests","n_estimators: 3000 & max_depth: 200","R2 Score",0.792582
+"Random Forests","n_estimators: 3000 & max_depth: 5","Mean Squared Error",52085.8
+"Random Forests","n_estimators: 3000 & max_depth: 5","R2 Score",0.624477
+"Random Forests","n_estimators: 3000 & max_depth: 50","Mean Squared Error",39124.5
+"Random Forests","n_estimators: 3000 & max_depth: 50","R2 Score",0.788117
+"Random Forests","n_estimators: 5000 & max_depth: 1","Mean Squared Error",97753.2
+"Random Forests","n_estimators: 5000 & max_depth: 1","R2 Score",-0.322697
+"Random Forests","n_estimators: 5000 & max_depth: 100","Mean Squared Error",40306.8
+"Random Forests","n_estimators: 5000 & max_depth: 100","R2 Score",0.775118
+"Random Forests","n_estimators: 5000 & max_depth: 20","Mean Squared Error",40281.6
+"Random Forests","n_estimators: 5000 & max_depth: 20","R2 Score",0.775399
+"Random Forests","n_estimators: 5000 & max_depth: 200","Mean Squared Error",39340.6
+"Random Forests","n_estimators: 5000 & max_depth: 200","R2 Score",0.78577
+"Random Forests","n_estimators: 5000 & max_depth: 5","Mean Squared Error",52137.2
+"Random Forests","n_estimators: 5000 & max_depth: 5","R2 Score",0.623735
+"Random Forests","n_estimators: 5000 & max_depth: 50","Mean Squared Error",39554
+"Random Forests","n_estimators: 5000 & max_depth: 50","R2 Score",0.783439
+Ridge,"alpha: 0.5 & max_iter: 1000","Mean Squared Error",34247.2
+Ridge,"alpha: 0.5 & max_iter: 1000","R2 Score",0.838642
+Ridge,"alpha: 0.5 & max_iter: 3000","Mean Squared Error",34247.2
+Ridge,"alpha: 0.5 & max_iter: 3000","R2 Score",0.838642
+Ridge,"alpha: 0.5 & max_iter: 5000","Mean Squared Error",34247.2
+Ridge,"alpha: 0.5 & max_iter: 5000","R2 Score",0.838642
+Ridge,"alpha: 1.0 & max_iter: 1000","Mean Squared Error",33830.3
+Ridge,"alpha: 1.0 & max_iter: 1000","R2 Score",0.842547
+Ridge,"alpha: 1.0 & max_iter: 3000","Mean Squared Error",33830.3
+Ridge,"alpha: 1.0 & max_iter: 3000","R2 Score",0.842547
+Ridge,"alpha: 1.0 & max_iter: 5000","Mean Squared Error",33830.3
+Ridge,"alpha: 1.0 & max_iter: 5000","R2 Score",0.842547
+Ridge,"alpha: 1.5 & max_iter: 1000","Mean Squared Error",33504.6
+Ridge,"alpha: 1.5 & max_iter: 1000","R2 Score",0.845564
+Ridge,"alpha: 1.5 & max_iter: 3000","Mean Squared Error",33504.6
+Ridge,"alpha: 1.5 & max_iter: 3000","R2 Score",0.845564
+Ridge,"alpha: 1.5 & max_iter: 5000","Mean Squared Error",33504.6
+Ridge,"alpha: 1.5 & max_iter: 5000","R2 Score",0.845564
+Ridge,"alpha: 2.0 & max_iter: 1000","Mean Squared Error",33240.1
+Ridge,"alpha: 2.0 & max_iter: 1000","R2 Score",0.847992
+Ridge,"alpha: 2.0 & max_iter: 3000","Mean Squared Error",33240.1
+Ridge,"alpha: 2.0 & max_iter: 3000","R2 Score",0.847992
+Ridge,"alpha: 2.0 & max_iter: 5000","Mean Squared Error",33240.1
+Ridge,"alpha: 2.0 & max_iter: 5000","R2 Score",0.847992
