@@ -1,0 +1,2 @@
+https://www.kaggle.com/manjeetsingh/retaildataset
+https://www.kaggle.com/chrisbow/inferring-causal-effect-of-marketing-on-sales/notebook
