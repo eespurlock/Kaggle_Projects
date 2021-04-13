@@ -3,28 +3,83 @@ title: "Retail_Analysis"
 author: "Esther Spurlock"
 date: "4/12/2021"
 output: html_document
+Purpose: To estimate the impace of promotional markdown events on sales.
+A further description of the problem can be found here: https://www.kaggle.com/manjeetsingh/retaildataset?select=stores+data-set.csv
+I am basing my code off this solution: https://www.kaggle.com/chrisbow/inferring-causal-effect-of-marketing-on-sales/notebook
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(xts)
+library(CausalImpact)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r import, include=FALSE}
+# import data
+sales <- read_csv("Data/sales data-set.csv")
+stores <- read_csv("Data/stores data-set.csv")
+features <- read_csv("Data/Features data set.csv") %>%
+  mutate_all(~replace(.,is.na(.),0)) %>%
+  filter(MarkDown1 >= 0 & MarkDown2 >= 0 & MarkDown3 >= 0 & MarkDown4 >= 0 & MarkDown5 >= 0)
 ```
 
-## Including Plots
+```{r mutate, include=FALSE}
+#change the types of some of the columns
+sales <- sales %>%
+  mutate(Store = as.factor(Store),
+         Dept = as.factor(Dept),
+         Date = as.Date(Date, "%d/%m/%Y"),
+         Month = as.Date(Date, "%m"))
 
-You can also embed plots, for example:
+stores <- stores %>%
+  mutate(Store = as.factor(Store),
+         Type = as.factor(Type))
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+features <- features %>%
+  mutate(Store = as.factor(Store),
+         Date = as.Date(Date, "%d/%m/%Y"))
+
+features$TotalMarkdown <- features$MarkDown1 + features$MarkDown2 + features$MarkDown3 + features$MarkDown4 + features$MarkDown5
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r choose, include=False}
+#because there are 99 departments, let us only look at those that have the highest sales
+
+#first, aggregate the total weekly sales of each department
+total_sales <- aggregate(Weekly_Sales~Dept, sales,sum)
+#next, order the total sales from greatest to least
+total_sales <- total_sales%>%
+  arrange(desc(total_sales$Weekly_Sales))
+
+#finally, look at the top 10
+head(total_sales, 10)
+
+```
+
+The departments with the top sales are:
+
+2
+8
+13
+38
+40
+72
+90
+91
+92
+95
+
+```{r trim_data, include=False}
+sales_trimmed <- sales %>%
+  filter(Dept==2 | Dept==8 | Dept==13 | Dept==38 | Dept==40 | Dept==72 | Dept==90 | Dept==91 | Dept==92 | Dept==95)
+```
+
+
+```{r plot, include=FALSE, fig.width=6, fig.height=10}
+ggplot(sales_trimmed, aes(x=Date, y=Weekly_Sales, colour=Dept)) +
+  geom_line()
+```
+
